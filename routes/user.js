@@ -13,8 +13,10 @@ router.post('/', (req,res) => {
     res.send('Post to user dashboard')
 })
 
-router.route('/:id')
+router
+.route('/:id')
 .get((req, res) =>{
+  console.log(req.user)
   res.send(`Get user with ID = ${req.params.id}`);
 })
 .put((req,res) => {
@@ -23,5 +25,12 @@ router.route('/:id')
 .delete((req, res) => {
   res.send(`Deleted user with ID = ${req.params.id}`)
 })
+
+router.param('id', (req, res, next, id) => {
+  req.user = users[id]
+  next()
+})
+  
+const users = [{name: 'Fran'}, {name: 'Mauro'}]
 
 module.exports = router
