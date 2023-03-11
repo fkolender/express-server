@@ -2,20 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.send('Got a GET request at /user');
+    res.send('Get user dashboard');
   })
   
 router.get('/new', function (req, res) {
-    res.send('Got a GET request at /user/new');
+    res.send('Get user form');
   })
 
 router.post('/', (req,res) => {
-    res.send('Create User')
+    res.send('Post to user dashboard')
 })
 
-router.get('/:id', (req, res) => {
-    res.send(`GET user with ID = ${req.params.id}`)
-}) // dynamica routing for users
-
+router.route('/:id')
+.get((req, res) =>{
+  res.send(`Get user with ID = ${req.params.id}`);
+})
+.put((req,res) => {
+  res.send(`Update user with ID =  ${req.params.id}`)
+})
+.delete((req, res) => {
+  res.send(`Deleted user with ID = ${req.params.id}`)
+})
 
 module.exports = router
