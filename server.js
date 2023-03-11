@@ -2,8 +2,8 @@ const express = require("express")
 const app = express()
 const port = 5000
 
-app.set('view engine', 'ejs') // motor de vista
-app.use(logger)
+app.set('view engine', 'ejs') 
+app.use(express.static("source")) // Auto finds static file tree to serve.
 
 app.get('/', function (req, res) {
   res.render('index', {server: 'Express.js'})
@@ -15,11 +15,6 @@ app.post('/', function (req, res) {
 
 const userRouter = require('./routes/user')
 app.use('/user', userRouter)
-
-function logger(req,res,next) {
-  console.log(req.originalUrl)
-  next()
-}
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`)

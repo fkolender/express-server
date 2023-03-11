@@ -1,18 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
+router.use(logger)
+
 router.get('/', function (req, res) {
     res.send('Get user dashboard');
   })
   
-router.get('/new', function (req, res) {
+  router.get('/new', function (req, res) {
     res.send('Get user form');
   })
-
-router.post('/', (req,res) => {
+  
+  router.post('/', (req,res) => {
     res.send('Post to user dashboard')
-})
-
+  })
+  
 router
 .route('/:id')
 .get((req, res) =>{
@@ -32,5 +34,10 @@ router.param('id', (req, res, next, id) => {
 })
   
 const users = [{name: 'Fran'}, {name: 'Mauro'}]
+
+function logger(req,res,next) {
+  console.log(req.originalUrl)
+  next()
+}
 
 module.exports = router
