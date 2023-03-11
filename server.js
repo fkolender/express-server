@@ -2,21 +2,19 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+app.set('view engine', 'ejs'); // motor de vista
+
 app.get('/', function (req, res) {
-    res.send('Welcome to my little Express server.')
+  res.render('index', {server: 'Express.js'});
   })
 
 app.post('/', function (req, res) {
-    res.send('Got a POST request at /')
+    res.send('Got a POST request at /').sendStatus(500);
   })
 
-app.get('/user', function (req, res) {
-    res.send('Got a GET request at /user')
-  })
+const userRouter = require('./routes/user');
 
-app.delete('/user', function (req, res) {
-    res.send('Got a DELETE request at /user')
-  })
+app.use('/user', userRouter)
 
 app.listen(port, () => {
     console.log(`Now listening on port ${port}`);
